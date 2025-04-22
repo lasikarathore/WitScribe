@@ -1,24 +1,43 @@
 import { Link } from "react-router-dom";
-import shraddhadi from '../assets/websocket.webp';
+import shraddhadi from '../assets/websocket.webp'
+import quizzy from '../assets/quiz.webp'
+import leadery from '../assets/leaderboard.webp'
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // You can also use <link> for styles
+// ..
+AOS.init();
 
 export default function LandingPage() {
   return (
     <>
+     <div data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-easing="ease-in-out" data-aos-delay="300">
     <div className="min-h-screen bg-gray-100">
       <div className="space-y-16 bg-gray-100 p-6">
+
+      <nav data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-easing="ease-in-out" data-aos-delay="300" className="flex items-center justify-center gap-8 mt-2">
+        <Link className="bg-slate-200 rounded-full px-3 py-1" to='/home'>Home</Link>
+        <Link className="bg-slate-200 rounded-full px-3 py-1" to='/about'>About Us</Link>
+        <Link className="bg-slate-200 rounded-full px-3 py-1" to='/contact'>Contact Us</Link>
+        <Link className="bg-slate-200 rounded-full px-3 py-1" to='/faq'>FAQ</Link>
+      </nav>
+
       {/* Hero Section */}
-      <section className="text-center bg-gray-300 py-20 rounded-xl shadow">
-        <h1 className="text-4xl font-bold mb-4">Level Up Your Studies With WitScribe</h1>
-        <p className="text-gray-700 mb-6">Supercharge Your Studies with Us —<br />Embark on a Transformative Learning Journey Today!</p>
+      <section className="text-center bg-gray-300 py-40 mb-8 rounded-xl shadow">
+        <h1 className="text-6xl font-bold mb-4 leading-22">Level Up Your Studies <br /> With WitScribe</h1>
+        <p className="text-gray-700 text-xl mb-6">Supercharge Your Studies with Us —<br />Embark on a Transformative Learning Journey Today!</p>
         <Link to = "/register">
-        <button className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-full shadow-md">Explore for free →</button>
+        <button className="bg-red-500 hover:bg-red-600 text-white font-semibold py-4 px-10 rounded-full shadow-md">Explore for free &rarr;</button>
       </Link>
       </section>
+      </div>
 
       {/* Video Summarizer Section */}
+      <div data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-easing="ease-in-out" data-aos-delay="400">
       <section className="flex flex-col md:flex-row items-center bg-gray-200 p-8 rounded-xl shadow">
         <div className="md:w-1/2 mb-6 md:mb-0">
+        
           <img src={shraddhadi} alt="How to use WebSocket?" className="rounded-lg shadow" />
+          
         </div>
         <div className="md:w-1/2 md:pl-12 text-center md:text-left">
           <h2 className="text-2xl font-semibold mb-4">Is the video too long for you?</h2>
@@ -32,8 +51,11 @@ export default function LandingPage() {
         </div>
       </section>
       </div>
+      </div>
+      
 
       {/* Quiz Generation Section */}
+      <div data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-easing="ease-in-out" data-aos-delay="400">
       <section className="py-12 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row gap-8">
@@ -43,15 +65,23 @@ export default function LandingPage() {
                 Yes it's true, you heard it right you just upload the link of the YouTube video click on generate quiz and poof! you have your own quiz generated especially for you
               </p>
             </div>
-            <div className="w-full md:w-1/2 flex flex-col gap-4">
-              <div className="bg-gray-200 h-32 w-full"></div>
-              <div className="bg-gray-200 h-32 w-full"></div>
+            <div className="w-100 md:w-1/2 flex gap-4">
+              <div className="bg-gray-20 h-32 w-100">
+              <img src={quizzy} alt="How to use WebSocket?" className="rounded-lg shadow h-auto" />
+
+              </div>
+              <div className="bg-gray-200 h-32 w-full">
+              <img src={leadery} alt="How to use WebSocket?" className="rounded-lg shadow" />
+
+              </div>
             </div>
           </div>
         </div>
       </section>
+      </div>
 
       {/* Community Section */}
+      <div data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-easing="ease-in-out" data-aos-delay="400">
       <section className="py-12 px-4 border-t border-gray-200">
         <div className="max-w-6xl mx-auto">
           <h3 className="text-xl font-semibold text-center mb-8">Explore Our Community Of Students</h3>
@@ -117,8 +147,10 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      </div>
 
       {/* Reviews Section */}
+      <div data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-easing="ease-in-out" data-aos-delay="400">
       <section className="py-12 px-4 border-t border-gray-200">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row gap-8 items-start">
@@ -184,16 +216,20 @@ export default function LandingPage() {
             <div className="w-full md:w-1/3">
               <h2 className="text-4xl font-bold mb-6">What Our Users Say?</h2>
               <p className="mb-6">You will love us too just like our users so try us now</p>
+              <Link to = "/register">
               <button className="text-red-500 hover:text-red-600 font-medium flex items-center">
                 Try Now 
+              
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
               </button>
+              </Link>
             </div>
           </div>
         </div>
       </section>
+      </div>
     </div>
     </>
   );

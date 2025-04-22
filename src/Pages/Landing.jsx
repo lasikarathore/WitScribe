@@ -1,20 +1,24 @@
-import { useState } from 'react';
+import { Link } from "react-router-dom";
+import shraddhadi from '../assets/websocket.webp';
 
 export default function LandingPage() {
   return (
+    <>
     <div className="min-h-screen bg-gray-100">
       <div className="space-y-16 bg-gray-100 p-6">
       {/* Hero Section */}
       <section className="text-center bg-gray-300 py-20 rounded-xl shadow">
         <h1 className="text-4xl font-bold mb-4">Level Up Your Studies With WitScribe</h1>
         <p className="text-gray-700 mb-6">Supercharge Your Studies with Us —<br />Embark on a Transformative Learning Journey Today!</p>
+        <Link to = "/register">
         <button className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-full shadow-md">Explore for free →</button>
+      </Link>
       </section>
 
       {/* Video Summarizer Section */}
       <section className="flex flex-col md:flex-row items-center bg-gray-200 p-8 rounded-xl shadow">
         <div className="md:w-1/2 mb-6 md:mb-0">
-          <img src="/your-video-thumbnail.jpg" alt="How to use WebSocket?" className="rounded-lg shadow" />
+          <img src={shraddhadi} alt="How to use WebSocket?" className="rounded-lg shadow" />
         </div>
         <div className="md:w-1/2 md:pl-12 text-center md:text-left">
           <h2 className="text-2xl font-semibold mb-4">Is the video too long for you?</h2>
@@ -22,7 +26,9 @@ export default function LandingPage() {
             What if we say you can learn what is in the video faster and much better without even watching the video
             with the help of Artificial Intelligence
           </p>
-          <button className="bg-black text-white py-2 px-5 rounded-full hover:bg-gray-800">Enhance Your Studies →</button>
+          <Link to = "/register">
+          <button className="bg-black text-white py-2 px-5 rounded-full hover:bg-gray-800"> Enhance Your Studies →</button>
+        </Link>
         </div>
       </section>
       </div>
@@ -189,5 +195,6 @@ export default function LandingPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

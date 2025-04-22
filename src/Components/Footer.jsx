@@ -19,10 +19,10 @@ const Footer = () => {
 
         {/* Center: Navigation */}
         <div className="flex space-x-6 mb-6 md:mb-0 text-sm font-medium ">
-          <Link to='home'>Home</Link>
-          <Link to='about'>About Us</Link>
-          <Link to='contact'>Contact Us</Link>
-          <Link to='register'>Register</Link>
+          <Link to='home' className="hover:text-red-500 px-3 py-2 rounded transition">Home</Link>
+          <Link to='about' className="hover:text-red-500 px-3 py-2 rounded transition">About Us</Link>
+          <Link to='contact' className="hover:text-red-500 px-3 py-2 rounded transition">Contact Us</Link>
+          <Link to='register' className="hover:text-red-500 px-3 py-2 rounded transition">Register</Link>
         </div>
 
         {/* Right: Social Icons */}

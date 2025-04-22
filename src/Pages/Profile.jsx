@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Navbar from '../Components/Navbar';
 
 const UserProfile = () => {
   const [profileData, setProfileData] = useState({
@@ -18,6 +19,8 @@ const UserProfile = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="min-h-screen bg-transparent mt-4">
       {/* Mobile Menu Button */}
       <div className="lg:hidden fixed top-4 left-4 z-20">
@@ -182,6 +185,7 @@ const UserProfile = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -1,9 +1,12 @@
 import React from 'react';
 import '../App.css';
+import Navbar from '../Components/Navbar';
 
 
 const NotFound = () => {
   return (
+    <>
+    <Navbar/>
     <div className="error-container">
       <div className="error-card">
         <h1 className="error-code">404</h1>
@@ -21,6 +24,7 @@ const NotFound = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

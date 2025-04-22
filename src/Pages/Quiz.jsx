@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Clock } from 'lucide-react';
+import Navbar from '../Components/Navbar';
 
 // Sample quiz data - in a real app, you'd fetch this from an API
 const quizQuestions = [
@@ -40,12 +41,15 @@ const quizQuestions = [
 
 function App() {
   return (
+    <>
+    <Navbar/>
     <div className="flex flex-col min-h-screen">
       <div className="flex-grow">
         <Quiz />
       </div>
       <Footer />
     </div>
+    </>
   );
 }
 

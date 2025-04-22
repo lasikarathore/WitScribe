@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import '../App.css'
 import { Link } from 'react-router';
+import { useNavigate } from 'react-router-dom'; // Add this at the top
+
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -23,17 +25,43 @@ const Login = () => {
       // You can redirect or show success state here
     }
   };
+  const navigate = useNavigate();
+
 
   return (
     // <div className="min-h-screen bg-[#1E1E1E] flex items-center justify-center px-4 py-10">
-      <div className="bg-[#f0f0f0] w-full max-w-[1400px] rounded border-2 p-6 md:p-12 flex flex-col md:flex-row border-none mx-auto mt-5 gap-10">
-        
+          <div className="bg-[#f0f0f0] w-full max-w-[1400px] rounded border-2 p-6 md:p-12 flex flex-col md:flex-row border-none mx-auto mt-5 gap-10 h-[100vh]">
+                  
+                  <div className="absolute top-4 left-4">
+            <button
+              onClick={() => navigate(-1)}
+              className="flex items-center text-black hover:text-red-500 font-semibold"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6 mr-1"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 19.5L8.25 12l7.5-7.5"
+                />
+              </svg>
+              Back
+            </button>
+          </div>
+
         {/* Left Side */}
         <div className="md:w-1/2 flex flex-col justify-center text-center md:text-left">
           <h1 className="text-[40px] sm:text-[50px] md:text-[65px] lg:text-[75px] font-extrabold text-black leading-tight">
             Welcome Back
           </h1>
           <h2
+          id='strokeText'
             className="text-[40px] sm:text-[50px] md:text-[65px] lg:text-[75px] font-extrabold text-transparent"
             style={{ WebkitTextStroke: '1px black' }}
           >

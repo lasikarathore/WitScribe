@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import Navbar from '../Components/Navbar';
+
 
 const faqData = [
-  { question: "What is WitScribe?", answer: "WitScribe is an educational platform to" },
-  { question: "Who can use this platform?", answer: "Anyone interested in learning" },
+  { question: "What is WitScribe?", answer: "WitScribe is an educational platform where anyonne and everyone can learn and grow. The main objective of WitScribe is to make Learning Accessible to All. " },
+  { question: "Who can use this platform?", answer: "Anyone & Everyone , whether you are a student , a professional , an individual with different style of thinking , a lifelong learner etc.. " },
   {
     question: "Can I use it for non-educational videos like cooking or DIY?",
     answer: "While the focus is education, non-educational content is allowed as long as it’s informative and safe."
   },
-  { question: "What is the Study Room?", answer: "The Study Room is a feature where users can " },
+  { question: "What is the Study Room?", answer: "The Study Room is a feature where users can collectively discuss and collaborate on various topics, ask questions, provide answers and many more..." },
   { question: "Do I need the internet all the time?", answer: "You need internet to access content, but downloaded files can be viewed offline." }
 ];
 
@@ -15,7 +17,7 @@ const FAQItem = ({ question, answer, isOpen, onClick }) => (
   <div className="border-b">
     <button
       onClick={onClick}
-      className="w-full flex justify-between items-center py-4 text-left"
+      className="hover:text-red-500 px-3 py-2 w-full flex justify-between items-center py-4 text-left h-[10vh]"
     >
       <span className="text-lg font-medium">{question}</span>
       <span>{isOpen ? '-' : '+'}</span>
@@ -29,6 +31,8 @@ const FaqPage = () => {
   const toggle = (i) => setOpenIndex(openIndex === i ? null : i);
 
   return (
+    <>
+    <Navbar/>
     <div className="min-h-screen flex flex-col">
       {/* Content Container */}
       <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -69,6 +73,7 @@ const FaqPage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

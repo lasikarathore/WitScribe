@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 import RedCircle from '../assets/red-circle.webp'
+import Navbar from '../Components/Navbar';
 
 const AboutUs = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  
+ 
 
   return (
+    <>
+    <Navbar/>
     <div className="about-container">
       
 
@@ -175,6 +175,7 @@ const AboutUs = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

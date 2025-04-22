@@ -1,10 +1,11 @@
 import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import Navbar from '../Components/Navbar';
 
 const Notes = () => {
   const location = useLocation();
-  const { transcript, notes, videoId, videoUrl, lang, availableLangs } = location.state || {};
+  const { transcript, notes, videoId, lang, availableLangs } = location.state || {};
 
   if (!transcript || !notes) {
     return (
@@ -18,6 +19,8 @@ const Notes = () => {
   }
 
   return (
+    <>
+    <Navbar/>
     <div className="max-w-4xl mx-auto my-8 p-4">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Generated Notes</h1>
@@ -134,6 +137,7 @@ const Notes = () => {
         </button>
       </div>
     </div>
+    </>
   );
 };
 

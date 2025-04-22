@@ -1,5 +1,6 @@
 import React from "react";
 
+
 const answers = [
   {
     name: "Sohil Neema",
@@ -33,6 +34,8 @@ const answers = [
 
 export default function WebSocketDiscussion() {
   return (
+    <>
+    
     <div className="min-h-screen bg-transparent text-black px-4 sm:px-6 md:px-12 lg:px-24 py-10 space-y-10">
       <header className="flex flex-col gap-4 sm:flex-row justify-between items-center">
         <h1 className="text-3xl font-bold">WitScribe</h1>
@@ -96,5 +99,6 @@ export default function WebSocketDiscussion() {
 
       
     </div>
+    </>
   );
 }

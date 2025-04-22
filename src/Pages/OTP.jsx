@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router";
+import Navbar from "../Components/Navbar";
 
 export default function OTPVerification() {
   const [otp, setOtp] = useState(new Array(6).fill(""));
@@ -37,6 +38,8 @@ export default function OTPVerification() {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="w-full max-w-4xl rounded-2xl shadow-2xl text-center py-16 px-12 relative">
         <div className="absolute top-0 left-0 w-full h-48 bg-red-500 clip-path-triangle"></div>
@@ -93,5 +96,6 @@ export default function OTPVerification() {
         }
       `}</style>
     </div>
+    </>
   );
 }

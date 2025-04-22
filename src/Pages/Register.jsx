@@ -4,10 +4,42 @@ import UserImage from '../assets/user.png'
 import PadlockIcon from '../assets/padlock.png'
 import RegisterImage from '../assets/register.webp'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'; // Add this at the top
+
+
 
 const Register = () => {
+
+  const navigate = useNavigate();
+
   return (
     <>
+
+<div className="absolute top-4 left-4">
+  <button
+    onClick={() => navigate(-1)}
+    className="flex items-center text-black hover:text-red-500 font-semibold"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className="w-6 h-6 mr-1"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M15.75 19.5L8.25 12l7.5-7.5"
+      />
+    </svg>
+    Back
+  </button>
+</div>
+
+
+
       <section className='register bg-[#efefef] flex flex-col lg:flex-row justify-center items-center min-h-screen lg:gap-30 gap-10 px-4 py-10'>
         <form className='flex flex-col w-full max-w-md'>
           <label htmlFor="username" className='mt-4'>

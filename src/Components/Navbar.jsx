@@ -53,8 +53,8 @@ const Navbar = () => {
           <Link to="/" className="active" id="redLink">
             Home
           </Link>
-          <Link to="/quiz">Quiz</Link>
-          <Link to="/community">Community</Link>
+          <Link to="/quiz" className="hover:text-red-500 px-3 py-2 rounded transition">Quiz</Link>
+          <Link to="/community" className="hover:text-red-500 px-3 py-2 rounded transition">Community</Link>
           <Link to="/profile">
             <img
               loading="lazy"
@@ -71,8 +71,8 @@ const Navbar = () => {
             <Link to="/" className="active py-2" id="redLink">
               Home
             </Link>
-            <Link to="/quiz" className="py-2">Quiz</Link>
-            <Link to="/community" className="py-2">Community</Link>
+            <Link to="/quiz" className="hover:text-red-500 px-3 py-2 rounded transition">Quiz</Link>
+            <Link to="/community" className="hover:text-red-500 px-3 py-2 rounded transition">Community</Link>
             <Link to="/profile" className="py-2 flex items-center">
               <img
                 src="https://i.pravatar.cc/40"

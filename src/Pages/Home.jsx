@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../Components/Navbar';
 
 const Home = () => {
   const [videoUrl, setVideoUrl] = useState('');
@@ -14,8 +15,8 @@ const Home = () => {
   const getYouTubeVideoId = (url) => {
     // More comprehensive regex to catch more YouTube URL formats
     const regexes = [
-      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/|youtube\.com\/user\/\S+\/\S+\/\S+|youtube\.com\/user\/\S+\/\S+|youtube\.com\/\S+\/\S+\/\S+|youtube\.com\/\S+\/\S+|youtube\.com\/\S+)([^"&?\/\s]{11})/,
-      /(?:youtube\.com.*(?:v=|\/v\/|\/embed\/)|youtu\.be\/)([^"&?\/\s]{11})/
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/|youtube\.com\/user\/\S+\/\S+\/\S+|youtube\.com\/user\/\S+\/\S+|youtube\.com\/\S+\/\S+\/\S+|youtube\.com\/\S+\/\S+|youtube\.com\/\S+)([^"&?/\\s]{11})/,
+      /(?:youtube\.com.*(?:v=|\/v\/|\/embed\/)|youtu\.be\/)([^"&?/\\s]{11})/
     ];
     
     for (const regex of regexes) {
@@ -104,7 +105,7 @@ const Home = () => {
     }
   };
 
-  const processWithGemini = async (transcript, videoId) => {
+  const processWithGemini = async (transcript) => {
     // Use a shorter version of the transcript if it's too long
     const truncatedTranscript = transcript.length > 30000 
       ? transcript.substring(0, 30000) + "... (transcript truncated due to length)"
@@ -170,7 +171,10 @@ const Home = () => {
   };
 
   return (
+    <>
+      <Navbar/>
     <div className="max-w-xl mx-auto mt-10 p-4">
+
       
       <h1 className="text-2xl font-bold mb-4">YouTube Video Notes Generator</h1>
       <p className="mb-4 text-gray-600">Enter a YouTube URL to generate smart notes using Gemini AI</p>
@@ -210,6 +214,8 @@ const Home = () => {
         </div>
       )}
     </div>
+    </>
+
   );
 };
 

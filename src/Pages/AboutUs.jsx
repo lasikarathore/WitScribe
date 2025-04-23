@@ -2,11 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 import RedCircle from '../assets/red-circle.webp'
+import bookzy from '../assets/books.webp'
+import nighty from '../assets/nightlamp.webp'
+import manwrit from '../assets/manwriting.webp'
+import personal from '../assets/persononlaptop.webp'
 import Navbar from '../Components/Navbar';
 
 const AboutUs = () => {
+
   
- 
 
   return (
     <>
@@ -106,15 +110,16 @@ const AboutUs = () => {
         </p>
 
         <div className="image-grid">
-          <img loading='lazy' src="../assets/" alt="Study desk" />
-          <img loading='lazy' src="/night-study.webp" alt="Night study" />
-          <img loading='lazy' src="/library-study.webp" alt="Library study" />
-          <img loading='lazy' src="/group-study.webp" alt="Group study" />
+          <img loading='lazy' src= {bookzy} />
+          <img loading='lazy' src= {nighty} alt="Night study" />
+          <img loading='lazy' src= {manwrit} alt="Library study" />
+          <img loading='lazy' src= {personal} alt="Group study" />
         </div>
       </div>
 
       {/* Journey Timeline */}
       <div className="journey-section">
+        
         <h2 className="journey-title">
           Our <span>Journey</span> Till Date
         </h2>

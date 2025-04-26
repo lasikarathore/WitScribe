@@ -1,7 +1,7 @@
 // Community.jsx (Main community page listing questions)
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../Components/Navbar"; // Fixed casing to match other imports
+import Navbar from "../components/Navbar"; // Adjust import path as needed
 
 const initialQuestions = [
   {
@@ -81,27 +81,6 @@ export default function Community() {
             WitScribe
           </Link>
           <div className="flex-1 flex items-center justify-end gap-4">
-            {/* Navigation Links */}
-            <div className="flex items-center gap-6 mr-4">
-              <Link 
-                to="/home" 
-                className="text-white hover:text-red-500 transition-colors"
-              >
-                Home
-              </Link>
-              <Link 
-                to="/quiz" 
-                className="text-white hover:text-red-500 transition-colors"
-              >
-                Quiz
-              </Link>
-              <Link 
-                to="/about" 
-                className="text-white hover:text-red-500 transition-colors"
-              >
-                About Us
-              </Link>
-            </div>
             <div className="max-w-md w-full">
               <input
                 type="text"

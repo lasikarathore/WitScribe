@@ -7,7 +7,6 @@ const NotFound = () => {
   return (
     <>
     <Navbar/>
-    <div data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-easing="ease-in-out" data-aos-delay="300">
     <div className="error-container">
       <div className="error-card">
         <h1 className="error-code">404</h1>
@@ -24,7 +23,6 @@ const NotFound = () => {
           </button>
         </div>
       </div>
-    </div>
     </div>
     </>
   );

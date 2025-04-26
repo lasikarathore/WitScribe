@@ -2,9 +2,6 @@ import { Link } from "react-router-dom";
 import shraddhadi from '../assets/websocket.webp'
 import quizzy from '../assets/quiz.webp'
 import leadery from '../assets/leaderboard.webp'
-import person1 from '../assets/photoooo.webp'
-import person2 from '../assets/photoooooooo (1).webp'
-import person3 from '../assets/hooooo.webp'
 import AOS from 'aos';
 import 'aos/dist/aos.css'; // You can also use <link> for styles
 // ..
@@ -85,7 +82,7 @@ export default function LandingPage() {
 
       {/* Community Section */}
       <div data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-easing="ease-in-out" data-aos-delay="400">
-      <section className="py-12 px-5 border-t border-gray-200">
+      <section className="py-12 px-4 border-t border-gray-200">
         <div className="max-w-6xl mx-auto">
           <h3 className="text-xl font-semibold text-center mb-8">Explore Our Community Of Students</h3>
           
@@ -94,24 +91,18 @@ export default function LandingPage() {
               {/* First comment */}
               <div className="pb-4 border-b border-gray-700">
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 bg-gray-500 rounded-full">
-                  <img src={person3} className="w-full h-full object-cover rounded-full"></img>
-                  </div>
+                  <div className="w-8 h-8 bg-gray-500 rounded-full"></div>
                   <div>Sean</div>
                 </div>
                 <p>Guys can you help me out with this question?</p>
-                <div className="mt-2 bg-gray-700 h-16 w-1/3 rounded">
-      
-                </div>
+                <div className="mt-2 bg-gray-700 h-16 w-1/3 rounded"></div>
               </div>
               
               {/* Second comment */}
               <div className="py-4 border-b border-gray-700">
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 bg-gray-500 rounded-full">
-                  <img src={person1} className="w-full h-full object-cover rounded-full"></img>
-                  </div>
-                  <div>Cristina</div>
+                  <div className="w-8 h-8 bg-gray-500 rounded-full"></div>
+                  <div>Andrew</div>
                 </div>
                 <p className="mb-2">Yes Sean, The best way to solve this question is that you can actually add 1 and subtract 1 in numerator and then divide the whole equation in two parts and then solve them independently</p>
                 <div className="flex items-center gap-4">
@@ -133,12 +124,10 @@ export default function LandingPage() {
               {/* Third comment */}
               <div className="pt-4">
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 bg-gray-500 rounded-full">
-                  <img src={person2} className="w-full h-full object-cover rounded-full"></img>
-                  </div>
-                  <div>Amrita</div>
+                  <div className="w-8 h-8 bg-gray-500 rounded-full"></div>
+                  <div>Albert</div>
                 </div>
-                <p className="mb-2">Cristina is right this method is much easier to use than textbook one think of it as a cheat code</p>
+                <p className="mb-2">Andrew is right this method is much easier to use than textbook one think of it as a cheat code</p>
                 <div className="flex items-center gap-4">
                   <button className="flex items-center gap-1 text-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -180,9 +169,7 @@ export default function LandingPage() {
                   <h4 className="font-semibold mb-2">Andrew was here</h4>
                   <p className="text-sm mb-4">I can get notes of any video I want, it also provides time stamps of those videos, its awesome</p>
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 bg-gray-300 rounded-full">
-                    <img src={person3} className="w-full h-full object-cover rounded-full"></img>
-                    </div>
+                    <div className="w-6 h-6 bg-gray-300 rounded-full"></div>
                     <span className="text-sm">Andrew</span>
                     <span className="text-xs text-gray-500">2-4-2025</span>
                   </div>
@@ -200,9 +187,7 @@ export default function LandingPage() {
                   <h4 className="font-semibold mb-2">Best Summarizer</h4>
                   <p className="text-sm mb-4">Provide the best summaries of any topic I want just time to upload the link</p>
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 bg-gray-300 rounded-full">
-                    <img src={person1} className="w-full h-full object-cover rounded-full" ></img>
-                    </div>
+                    <div className="w-6 h-6 bg-gray-300 rounded-full"></div>
                     <span className="text-sm">Cristina</span>
                     <span className="text-xs text-gray-500">27-1-2025</span>
                   </div>
@@ -220,9 +205,7 @@ export default function LandingPage() {
                   <h4 className="font-semibold mb-2">A Saviour</h4>
                   <p className="text-sm mb-4">no save me at the time just before exams</p>
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 bg-gray-300 rounded-full">
-                    <img src={person2} className="w-full h-full object-cover rounded-full"></img>
-                    </div>
+                    <div className="w-6 h-6 bg-gray-300 rounded-full"></div>
                     <span className="text-sm">Amrita Sharma</span>
                     <span className="text-xs text-gray-500">6-2-2025</span>
                   </div>

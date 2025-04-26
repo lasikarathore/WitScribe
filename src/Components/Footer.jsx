@@ -27,9 +27,9 @@ const Footer = () => {
 
         {/* Right: Social Icons */}
         <div className="flex space-x-4">
-          <a href="https://www.instagram.com/witscribe?utm_source=qr&igsh=YjBtcGduOHptZnFu"><FaInstagram className="w-5 h-5 hover:text-gray-400" /></a>
-          <a href="https://www.facebook.com/share/15sqU3vopC/"><FaFacebookF className="w-5 h-5 hover:text-gray-400" /></a>
-          <a href="https://www.threads.net/@witscribe"><FaXTwitter className="w-5 h-5 hover:text-gray-400" /></a>
+          <a href="#"><FaInstagram className="w-5 h-5 hover:text-gray-400" /></a>
+          <a href="#"><FaFacebookF className="w-5 h-5 hover:text-gray-400" /></a>
+          <a href="#"><FaXTwitter className="w-5 h-5 hover:text-gray-400" /></a>
           <a href="#"><FaLinkedinIn className="w-5 h-5 hover:text-gray-400" /></a>
         </div>
       </div>

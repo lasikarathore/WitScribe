@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../App.css";
 import { Link } from "react-router-dom";
+import UserImage from "../assets/user.png";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -56,12 +57,7 @@ const Navbar = () => {
           <Link to="/quiz" className="hover:text-red-500 px-3 py-2 rounded transition">Quiz</Link>
           <Link to="/community" className="hover:text-red-500 px-3 py-2 rounded transition">Community</Link>
           <Link to="/profile">
-            <img
-              loading="lazy"
-              src="https://i.pravatar.cc/40"
-              alt="Profile"
-              className="profile-pic rounded-full"
-            />
+            <img src={UserImage} className="h-4" alt="" />
           </Link>
         </div>
 

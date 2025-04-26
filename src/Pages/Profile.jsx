@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Navbar from '../Components/Navbar';
 import { useNavigate } from "react-router-dom";
 import perosonol from '../assets/persononlaptop.webp';
 import { FiCamera } from 'react-icons/fi';
+import Navbar from '../components/Navbar';
 
 const UserProfile = () => {
   const [image, setImage] = useState(null);

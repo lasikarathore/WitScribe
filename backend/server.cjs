@@ -1,218 +1,288 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
-const session = require('express-session');
-const { v4: uuidv4 } = require('uuid');
-const twilio = require('twilio');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
+const JWT_SECRET = 'your-secret-key'; // In production, use environment variables
 
-// Database Connection
-// mongoose.connect('mongodb://localhost:27017/witscribe', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// });
-
-// Schemas
-const UserSchema = new mongoose.Schema({
-  name: String,
-  email: { type: String, unique: true },
-  password: String,
-  phone: String,
-  isVerified: { type: Boolean, default: false },
-  joinedAt: { type: Date, default: Date.now }
-});
-
-const QuestionSchema = new mongoose.Schema({
-  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  title: String,
-  description: String,
-  tags: [String],
-  votes: [{ userId: mongoose.Schema.Types.ObjectId, value: Number }],
-  comments: [{
-    text: String,
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    createdAt: { type: Date, default: Date.now }
-  }],
-  answers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Answer' }],
-  createdAt: { type: Date, default: Date.now }
-});
-
-const AnswerSchema = new mongoose.Schema({
-  question: { type: mongoose.Schema.Types.ObjectId, ref: 'Question' },
-  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  text: String,
-  votes: [{ userId: mongoose.Schema.Types.ObjectId, value: Number }],
-  comments: [{
-    text: String,
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    createdAt: { type: Date, default: Date.now }
-  }],
-  createdAt: { type: Date, default: Date.now }
-});
-
-const User = mongoose.model('User', UserSchema);
-const Question = mongoose.model('Question', QuestionSchema);
-const Answer = mongoose.model('Answer', AnswerSchema);
+// In-memory storage for users (Replace with a database in production)
+const users = [];
 
 // Middleware
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: ['http://localhost:5173', 'http://localhost:3000'], // Allow both origins
   credentials: true
 }));
 
-app.use(session({
-  secret: 'your-secret-key',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000
-  }
-}));
-
-// Authentication Middleware
-const requireAuth = (req, res, next) => {
-  if (!req.session.userId) {
-    return res.status(401).json({ success: false, message: 'Unauthorized' });
-  }
-  next();
+// Helper functions
+const generateToken = (userId) => {
+  return jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: '1h' });
 };
 
-// Community Endpoints
-
-// Post Question
-app.post('/questions', requireAuth, async (req, res) => {
+// Authentication middleware
+const authenticate = (req, res, next) => {
   try {
-    const { title, description, tags } = req.body;
-    const question = new Question({
-      author: req.session.userId,
-      title,
-      description,
-      tags
-    });
-    await question.save();
-    res.status(201).json({ success: true, question });
-  } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error' });
-  }
-});
-
-// Get All Questions
-app.get('/questions', async (req, res) => {
-  try {
-    const questions = await Question.find()
-      .populate('author', 'name')
-      .sort({ createdAt: -1 });
-    res.json({ success: true, questions });
-  } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error' });
-  }
-});
-
-// Get Single Question
-app.get('/questions/:id', async (req, res) => {
-  try {
-    const question = await Question.findById(req.params.id)
-      .populate('author', 'name')
-      .populate({
-        path: 'answers',
-        populate: { path: 'author', select: 'name' }
+    // Get token from cookie or Authorization header
+    const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
+    
+    if (!token) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Authentication required' 
       });
-      
-    res.json({ success: true, question });
+    }
+    
+    // Verify token
+    const decoded = jwt.verify(token, JWT_SECRET);
+    
+    // Find user
+    const user = users.find(u => u.id === decoded.id);
+    if (!user) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'User not found' 
+      });
+    }
+    
+    // Add user object to request
+    req.user = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      verified: user.verified
+    };
+    
+    next();
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error' });
+    console.error('Authentication error:', error);
+    return res.status(401).json({ 
+      success: false, 
+      message: 'Invalid or expired token' 
+    });
   }
-});
+};
 
-// Post Answer
-app.post('/questions/:id/answers', requireAuth, async (req, res) => {
+// Public routes
+app.post('/register', async (req, res) => {
   try {
-    const { text } = req.body;
-    const answer = new Answer({
-      question: req.params.id,
-      author: req.session.userId,
-      text
+    const { name, email, phone, password } = req.body;
+    
+    // Validate input
+    if (!name || !email || !phone || !password) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'All fields are required' 
+      });
+    }
+    
+    // Check if user already exists
+    const existingUser = users.find(user => user.email === email);
+    if (existingUser) {
+      return res.status(409).json({ 
+        success: false, 
+        message: 'User already exists with this email' 
+      });
+    }
+    
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    
+    // Create new user
+    const newUser = {
+      id: Date.now().toString(),
+      name,
+      email,
+      phone,
+      password: hashedPassword,
+      verified: false
+    };
+    
+    users.push(newUser);
+    
+    // Generate token
+    const token = generateToken(newUser.id);
+    
+    // Set cookie
+    res.cookie('token', token, { 
+      httpOnly: true,
+      maxAge: 3600000 // 1 hour
     });
     
-    await answer.save();
+    console.log(`User registered: ${name}, ${email}`);
     
-    // Add answer to question
-    await Question.findByIdAndUpdate(
-      req.params.id,
-      { $push: { answers: answer._id } }
-    );
-
-    res.status(201).json({ success: true, answer });
-  } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error' });
-  }
-});
-
-// Voting System
-app.post('/:type(questions|answers)/:id/vote', requireAuth, async (req, res) => {
-  try {
-    const { type, id } = req.params;
-    const { value } = req.body;
-    const userId = req.session.userId;
-
-    const Model = type === 'questions' ? Question : Answer;
-    
-    const item = await Model.findById(id);
-    const existingVote = item.votes.find(v => v.userId.equals(userId));
-
-    if (existingVote) {
-      // Update existing vote
-      if (existingVote.value === value) {
-        // Remove vote if same value
-        item.votes = item.votes.filter(v => !v.userId.equals(userId));
-      } else {
-        // Change vote value
-        existingVote.value = value;
+    return res.status(201).json({
+      success: true,
+      message: 'Registration successful',
+      data: {
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email,
+        phone: newUser.phone,
+        verified: newUser.verified
       }
-    } else {
-      // Add new vote
-      item.votes.push({ userId, value });
-    }
-
-    await item.save();
-    res.json({ success: true, votes: item.votes });
+    });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error' });
+    console.error('Registration error:', error);
+    return res.status(500).json({ 
+      success: false, 
+      message: 'Server error during registration' 
+    });
   }
 });
 
-// Comments System
-app.post('/:type(questions|answers)/:id/comments', requireAuth, async (req, res) => {
+app.post('/login', async (req, res) => {
   try {
-    const { type, id } = req.params;
-    const { text } = req.body;
-
-    const comment = {
-      text,
-      author: req.session.userId
-    };
-
-    const Model = type === 'questions' ? Question : Answer;
-    const updated = await Model.findByIdAndUpdate(
-      id,
-      { $push: { comments: comment } },
-      { new: true }
+    const { username, password } = req.body;
+    
+    // Validate input
+    if (!username || !password) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Username and password are required' 
+      });
+    }
+    
+    // Find user by username or email
+    const user = users.find(u => 
+      u.name === username || u.email === username
     );
-
-    res.status(201).json({ success: true, comments: updated.comments });
+    
+    if (!user) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Invalid credentials' 
+      });
+    }
+    
+    // Check password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Invalid credentials' 
+      });
+    }
+    
+    // Generate token
+    const token = generateToken(user.id);
+    
+    // Set cookie
+    res.cookie('token', token, { 
+      httpOnly: true,
+      maxAge: 3600000 // 1 hour
+    });
+    
+    console.log(`User logged in: ${user.name}`);
+    
+    return res.status(200).json({
+      success: true,
+      message: 'Login successful',
+      data: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        verified: user.verified
+      }
+    });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Server error' });
+    console.error('Login error:', error);
+    return res.status(500).json({ 
+      success: false, 
+      message: 'Server error during login' 
+    });
   }
 });
 
-// Keep your existing authentication endpoints here
+app.post('/logout', (req, res) => {
+  res.clearCookie('token');
+  return res.status(200).json({
+    success: true,
+    message: 'Logged out successfully'
+  });
+});
 
+// Protected routes - use the authenticate middleware
+app.post('/verify', authenticate, (req, res) => {
+  try {
+    const { code } = req.body;
+    const userId = req.user.id;
+    
+    // Find user
+    const user = users.find(u => u.id === userId);
+    if (!user) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'User not found' 
+      });
+    }
+    
+    // In a real app, you'd verify the code
+    // For demo, we'll just mark as verified
+    user.verified = true;
+    
+    return res.status(200).json({
+      success: true,
+      message: 'User verified successfully'
+    });
+  } catch (error) {
+    console.error('Verification error:', error);
+    return res.status(500).json({ 
+      success: false, 
+      message: 'Server error during verification' 
+    });
+  }
+});
+
+app.get('/user', authenticate, (req, res) => {
+  // User data is already available in req.user from the middleware
+  return res.status(200).json({
+    success: true,
+    data: req.user
+  });
+});
+
+// Example of another protected route
+app.get('/dashboard', authenticate, (req, res) => {
+  // Here you would fetch data specific to the authenticated user
+  return res.status(200).json({
+    success: true,
+    message: 'Welcome to your dashboard',
+    user: req.user.name,
+    // Other dashboard data would go here
+    stats: {
+      visits: 42,
+      actions: 12,
+      notifications: 5
+    }
+  });
+});
+
+// Example of a route that requires verification
+app.get('/premium-content', authenticate, (req, res) => {
+  if (!req.user.verified) {
+    return res.status(403).json({
+      success: false,
+      message: 'Phone verification required to access premium content'
+    });
+  }
+  
+  return res.status(200).json({
+    success: true,
+    message: 'Access to premium content granted',
+    content: 'This is exclusive content for verified users only'
+  });
+});
+
+// Server start
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Authentication server running on http://localhost:${PORT}`);
+  console.log(`CORS enabled for origins: http://localhost:5173, http://localhost:3000`);
 });

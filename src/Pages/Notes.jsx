@@ -2,7 +2,8 @@
 import { useLocation, Link } from "react-router-dom"
 import ReactMarkdown from "react-markdown"
 import { useState, useEffect, useRef } from "react"
-import Navbar from '../Components/Navbar'
+
+import Navbar from "../components/Navbar" // Adjust import path as needed
 
 // Text-to-Speech component extracted outside of Notes component
 function TextToSpeechButton({ textToRead }) {
@@ -290,6 +291,7 @@ function AccordionQuestion({ question }) {
         const errorData = await response.text();
         console.error("API Error Response:", errorData);
         throw new Error(`API Error: ${response.status} - ${response.statusText}`);
+
       }
       
       const data = await response.json();

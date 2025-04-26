@@ -35,17 +35,21 @@ npm install
 
 3. Wait for the installation to complete (this might take a few minutes)
 
+### Step 3: Environment Setup
+1. Create a new file named .env in the root directory
+2. Add the following environment variables:
+env
+REACT_APP_API_KEY=your_api_key_here
+
+3. Save the file
+
 ### Step 4: Start the Development Server
 1. Run the following command:
-   cd backend
-   node sendMail.cjs
+bash
+npm start
 
-2. Go back and start the application
-   cd ..
-   npm run dev
-
-4. Open in your default browser at http://localhost:3000
-
+2. The application will automatically open in your default browser at http://localhost:3000
+3. If it doesn't open automatically, manually open your browser and navigate to http://localhost:3000
 
 ### Step 5: Verify Installation
 1. You should see the WITSCRIBE homepage

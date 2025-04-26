@@ -198,7 +198,11 @@ WITSCRIBE/
 ## API Keys and Configuration
 
 1. *Required API Keys*
-   - You dont need to do anything all the keys are public in this repo
+   - Create an account on the required service
+   - Generate API key
+   - Add to .env file:
+   
+   REACT_APP_API_KEY=your_api_key_here
    
 
 2. *Environment Variables*
@@ -216,7 +220,6 @@ npm start
 bash
 npm run build
 
-3. *Add all the dependencies that are left after you finish installing the dependencies it will tell you what it lacks*
 
 3. *Running Tests*
 bash

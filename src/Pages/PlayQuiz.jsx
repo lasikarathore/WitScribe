@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Navbar from '../Components/Navbar';
+import Navbar from '../components/Navbar'; // Adjust import path as needed
 
 export default function QuizPage() {
   const location = useLocation();
@@ -14,6 +14,7 @@ export default function QuizPage() {
   const [score, setScore] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [redirectTimer, setRedirectTimer] = useState(30);
+  const [showColorGuide, setShowColorGuide] = useState(true);
 
   useEffect(() => {
     if (showResult) {
@@ -51,6 +52,10 @@ export default function QuizPage() {
 
   const current = quizData[currentQuestion];
 
+  const handleGotIt = () => {
+    setShowColorGuide(false);
+  };
+
   const handleOptionClick = (index) => {
     if (answered || showResult) return;
     setSelectedOption(index);
@@ -71,6 +76,10 @@ export default function QuizPage() {
     } else {
       setShowResult(true);
     }
+  };
+
+  const handleSkip = () => {
+    setShowResult(true);
   };
 
   const getButtonStyle = (index) => {
@@ -108,7 +117,51 @@ export default function QuizPage() {
   return (
     <>
     <Navbar />
-    <div className=" my-30 w-full flex flex-col justify-center items-center p-8">
+    {showColorGuide && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="bg-white p-8 rounded-lg max-w-md w-full mx-4">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Instructions</h2>
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <p className="text-gray-700 font-medium">1. Quiz Structure</p>
+              <ul className="list-disc list-inside text-gray-600 space-y-1">
+                <li>Total Questions: {quizData.length}</li>
+                <li>Time per Question: 30 seconds</li>
+                <li>Automatic progression to next question when time runs out</li>
+              </ul>
+            </div>
+            <div className="space-y-2">
+              <p className="text-gray-700 font-medium">2. Answer Colors</p>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-red-500 rounded"></div>
+                  <p className="text-gray-700">Correct Answer</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-black rounded"></div>
+                  <p className="text-gray-700">Your Selected Answer</p>
+                </div>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <p className="text-gray-700 font-medium">3. Navigation</p>
+              <ul className="list-disc list-inside text-gray-600 space-y-1">
+                <li>Click "Next" to proceed after answering</li>
+                <li>Use "End Quiz" button to finish early</li>
+                <li>Final score will be shown after completion</li>
+              </ul>
+            </div>
+          </div>
+          <button
+            onClick={handleGotIt}
+            className="mt-6 w-full px-6 py-3 bg-gray-800 text-white rounded-lg font-semibold hover:bg-black transition-all duration-300"
+          >
+            Got it!
+          </button>
+        </div>
+      </div>
+    )}
+    <div className="my-30 w-full flex flex-col justify-center items-center p-8">
       <div className="w-full max-w-5xl flex flex-col space-y-12">
 
         {/* Top bar */}
@@ -116,8 +169,16 @@ export default function QuizPage() {
           <div className="text-gray-400 text-sm font-medium">
             Question {currentQuestion + 1} / {quizData.length}
           </div>
-          <div className="text-gray-400 text-sm font-medium">
-            00:{timer < 10 ? `0${timer}` : timer}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={handleSkip}
+              className="px-4 py-2 bg-red-500 text-white rounded-lg text-sm font-medium hover:bg-red-600 transition-all duration-300"
+            >
+              End Quiz
+            </button>
+            <div className="text-gray-400 text-sm font-medium">
+              00:{`timer < 10 ? 0${timer} : timer`}
+            </div>
           </div>
         </div>
 

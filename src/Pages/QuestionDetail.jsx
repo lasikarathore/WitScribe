@@ -1,7 +1,6 @@
 // QuestionDetail.jsx (Detail page for a single question)
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import Navbar from "../components/Navbar"; // Adjust import path as needed
 
 const initialAnswers = [
   {

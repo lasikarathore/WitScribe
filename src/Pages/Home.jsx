@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../Components/Navbar';
+import Navbar from '../components/Navbar'; // Adjust import path as needed
 import HomeImage from '../assets/homeImage.webp'
 
 
@@ -78,7 +78,7 @@ const Home = () => {
       contents: [{
         parts: [{
           text: `Create comprehensive, well-structured notes from the following YouTube video transcript. 
-          Break it down into sections with clear headings, highlight key points, and summarize main ideas.
+          Break it down into sections with clear headings, don't use any puctuation marks , also remove all the special symbols used, don't use asterisk (*) symbol in the lines and summarize main ideas, make sure it relates to the topic of the video and should also include examples that simplifies learning.
           Format the response in markdown.
           TRANSCRIPT:
           ${truncatedTranscript}`

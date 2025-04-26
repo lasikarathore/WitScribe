@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from "../Components/Navbar";
+import Navbar from "../components/Navbar"; // Adjust import path as needed
 
-export default function OTPVerification() {
+export default function OTP() {
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -99,7 +99,7 @@ export default function OTPVerification() {
       // Combine OTP digits into a single string
       const otpString = otp.join("");
       
-      const response = await fetch('http://localhost:5000/verify-otp', {
+      const response = await fetch('http://localhost:5000/otp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -218,3 +218,4 @@ export default function OTPVerification() {
     </>
   );
 }
+

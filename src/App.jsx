@@ -41,8 +41,9 @@ function App() {
           <Route path='/quiz' element={<Quiz/>}/>
           <Route path="/playquiz" element={<PlayQuiz />} />
 
-          <Route path='/community' element={<Community/>}/>
-          <Route path="/community/question/:questionId" element={<QuestionDetail />} />
+          {/* Community Routes */}
+        <Route path="/community" element={<Community />} />
+        <Route path="/community/question/:questionId" element={<QuestionDetail />} />
           <Route path='/otp' element={<OTP />}/>
           <Route path='/test' element={<TestRegister />}/>
 

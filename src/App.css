@@ -48,7 +48,7 @@ body{
   align-items: center;
   /* transform: translateY(-100%); */
   animation: slideDown 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  margin-top: 100px;
+  margin-top: 200px;
 }
 
 @keyframes slideDown {

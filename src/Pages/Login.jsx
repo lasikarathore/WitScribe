@@ -149,49 +149,7 @@ const Login = () => {
             </button>
                 </Link>
 
-            {/* OR separator */}
-            <div className="flex items-center my-2">
-              <hr className="flex-grow border-t border-gray-400" />
-              <span className="mx-2 text-sm text-white">OR</span>
-              <hr className="flex-grow border-t border-gray-400" />
-            </div>
-
-            {/* Social Buttons */}
-            <div className="flex flex-col sm:flex-row sm:justify-between gap-4">
-              <button
-                type="button"
-                className="flex-1 flex items-center justify-center border border-white py-3 rounded-md bg-white"
-                onClick={() => console.log('Google login clicked')}
-              >
-                <svg className="w-6 h-6" viewBox="0 0 48 48">
-                  <path
-                    fill="#EA4335"
-                    d="M24 9.5c3.5 0 6.5 1.2 8.8 3.5l6.5-6.5C34.6 2.6 29.7 0 24 0 14.9 0 7.1 5.8 3.5 13.8l7.6 5.9C13.3 13.3 18.3 9.5 24 9.5z"
-                  />
-                  <path
-                    fill="#4285F4"
-                    d="M46.1 24.5c0-1.6-.1-3.2-.4-4.7H24v9h12.4c-.5 2.6-2 4.9-4.3 6.4v5.3h7c4.1-3.7 6.5-9.2 6.5-15z"
-                  />
-                  <path
-                    fill="#FBBC05"
-                    d="M11.1 28.3c-1.2-2.3-1.9-4.9-1.9-7.6s.7-5.3 1.9-7.6l-7.6-5.9C1.2 11.8 0 17.7 0 24s1.2 12.2 3.5 17.1l7.6-5.9z"
-                  />
-                  <path
-                    fill="#34A853"
-                    d="M24 48c5.7 0 10.6-1.9 14.1-5.1l-7-5.3c-2 1.4-4.5 2.2-7.1 2.2-5.7 0-10.6-3.8-12.3-9l-7.6 5.9C7.1 42.2 14.9 48 24 48z"
-                  />
-                  <path fill="none" d="M0 0h48v48H0z" />
-                </svg>
-              </button>
-
-              {/* Apple Button */}
-              <button
-                type="button"
-                className="flex-1 flex items-center justify-center border border-white py-3 rounded-md text-xl bg-white text-black font-bold"
-              >
-                
-              </button>
-            </div>
+           
           </form>
         </div>
       </div>

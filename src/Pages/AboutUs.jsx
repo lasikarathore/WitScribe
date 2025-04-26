@@ -6,11 +6,16 @@ import bookzy from '../assets/books.webp'
 import nighty from '../assets/nightlamp.webp'
 import manwrit from '../assets/manwriting.webp'
 import personal from '../assets/persononlaptop.webp'
+import star from '../assets/star-trail-removebg-preview.webp'
 import Navbar from '../Components/Navbar';
+import laks from '../assets/lakshya1.webp'
+import anug from '../assets/anugrah.webp'
+import vicky from '../assets/mrajarao.webp'
+import lassi from '../assets/lasika.webp'
+import { FaLinkedin, FaInstagram, FaTwitter } from 'react-icons/fa';
+
 
 const AboutUs = () => {
-
-  
 
   return (
     <>
@@ -21,9 +26,9 @@ const AboutUs = () => {
       {/* About Us Title */}
       <div className="about-hero">
         <div className="title-stack">
-          <span className="title-white typewriter-text">About Us</span>
-          <span className="title-outline typewriter-text">About Us</span>
-          <span className="title-black typewriter-text">About Us</span>
+          <span className="title-white typewriter-text">About   Us</span>
+          <span className="title-outline typewriter-text">About   Us</span>
+          <span className="title-black typewriter-text">About  Us</span>
         </div>
       </div>
 
@@ -72,7 +77,7 @@ const AboutUs = () => {
       <div className="mission-section">
         <div className="mission-header">
           <h2>Our <span>Mission</span></h2>
-          <img loading='lazy' src="/star-trail-removebg-preview.webp" alt="Star trail" />
+          <img loading='lazy' src={star} alt="Star trail" />
         </div>
 
         <p className="mission-tagline">
@@ -154,10 +159,10 @@ const AboutUs = () => {
 
         <div className="team-grid">
           {[
-            { name: "Lakshya Mishra", image: "/lakshya1.webp" },
-            { name: "Anugrah Sharma", image: "/anugrah.webp" },
-            { name: "M. Raja Rao Reddy", image: "/mrajarao.webp" },
-            { name: "Lasika Rathore", image: "/lasika.webp" }
+            { name: "Lakshya Mishra", image: laks },
+            { name: "Anugrah Sharma", image: anug },
+            { name: "M. Raja Rao Reddy", image: vicky },
+            { name: "Lasika Rathore", image: lassi }
           ].map((member, i) => (
             <div className="team-member" key={i}>
               <img loading='lazy' src={member.image} alt={member.name} />
@@ -165,13 +170,19 @@ const AboutUs = () => {
                 <h3>{member.name}</h3>
                 <div className="team-member-social">
                   <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                    <img loading='lazy' src="/instagram-icon.svg" alt="Instagram" />
+                  <a href="https://instagram.com">
+                      <FaInstagram size={24} />
+                  </a>
                   </a>
                   <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                    <img loading='lazy' src="/linkedin-icon.svg" alt="LinkedIn" />
+                  <a href="https://linkedin.com">
+                          <FaLinkedin size={24} />
+                  </a>
                   </a>
                   <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-                    <img loading='lazy' src="/twitter-icon.svg" alt="Twitter" />
+                  <a href="https://twitter.com">
+                    <FaTwitter size={24} />
+                  </a>
                   </a>
                 </div>
               </div>

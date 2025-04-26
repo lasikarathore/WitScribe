@@ -8,16 +8,18 @@ import Error from './Pages/Error'
 
 import FAQ from './Pages/FAQ'
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
-import Navbar from './Components/Navbar'
 import Footer from './Components/Footer'
 import Quiz from './Pages/Quiz'
 import Community from './Pages/Community'
+import QuestionDetail from './Pages/QuestionDetail'
 import Notes from './Pages/Notes'
 import OTP from './Pages/OTP'
 import AboutUs from './Pages/AboutUs'
 import Login from './Pages/Login'
 import Profile from './Pages/Profile'
 import Landing from './Pages/Landing'
+import PlayQuiz from './Pages/PlayQuiz'
+import TestRegister from './Pages/TestRegister'
 
 function App() {
 
@@ -37,8 +39,12 @@ function App() {
           <Route path='/about' element={<AboutUs/>}/>
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/quiz' element={<Quiz/>}/>
+          <Route path="/playquiz" element={<PlayQuiz />} />
+
           <Route path='/community' element={<Community/>}/>
+          <Route path="/community/question/:questionId" element={<QuestionDetail />} />
           <Route path='/otp' element={<OTP />}/>
+          <Route path='/test' element={<TestRegister />}/>
 
         </Routes>
       <Footer/>

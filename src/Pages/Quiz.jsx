@@ -1,217 +1,119 @@
-import React, { useState, useEffect } from 'react';
-import { Clock } from 'lucide-react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import quizIllustration from '../assets/quiz-illustration.webp';
 import Navbar from '../Components/Navbar';
 
-// Sample quiz data - in a real app, you'd fetch this from an API
-const quizQuestions = [
-  {
-    id: 832163,
-    question: "What are web sockets? And how do we use them?",
-    options: [
-      { id: "A", content: "A protocol that provides full-duplex communication" },
-      { id: "B", content: "A type of HTTP request" },
-      { id: "C", content: "A server-side technology only" },
-      { id: "D", content: "A deprecated web standard" }
-    ],
-    correctAnswer: "A"
-  },
-  {
-    id: 832164,
-    question: "Which of the following is NOT a JavaScript framework?",
-    options: [
-      { id: "A", content: "React" },
-      { id: "B", content: "Angular" },
-      { id: "C", content: "Python" },
-      { id: "D", content: "Vue" }
-    ],
-    correctAnswer: "C"
-  },
-  {
-    id: 832165,
-    question: "What does CSS stand for?",
-    options: [
-      { id: "A", content: "Computer Style Sheets" },
-      { id: "B", content: "Cascading Style Sheets" },
-      { id: "C", content: "Creative Style System" },
-      { id: "D", content: "Colorful Style Sheets" }
-    ],
-    correctAnswer: "B"
-  }
-];
+const GEMINI_API_KEY = "AIzaSyA6j1QQ77ETh5v7ImpSCWT6ZCWVDlGnOSg";
 
-function App() {
+export default function Quiz1() {
+  const [quizTopic, setQuizTopic] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    if (!quizTopic.trim()) return;
+
+    setLoading(true);
+    try {
+      const prompt = `Generate a multiple choice quiz with 20 medium-difficulty questions about "${quizTopic}". Each question should include:
+- question text
+- 4 options (A, B, C, D)
+- correct answer letter
+
+Respond in JSON format like:
+[
+  {
+    "question": "What is the capital of France?",
+    "options": ["Berlin", "Paris", "Madrid", "Rome"],
+    "answer": "B"
+  }
+]`;
+
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }]
+          }),
+        }
+      );
+
+      const data = await res.json();
+      const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+
+      let quizData = [];
+try {
+  const jsonStart = rawText.indexOf("[");
+  const jsonEnd = rawText.lastIndexOf("]");
+  const extractedJson = rawText.slice(jsonStart, jsonEnd + 1);
+  quizData = JSON.parse(extractedJson);
+} catch (err) {
+  console.error("Failed to parse quiz JSON:", err);
+  alert("Could not parse quiz questions from Gemini. Try again.");
+  setLoading(false);
+  return;
+}
+
+
+      navigate("/playquiz", { state: { quizData, topic: quizTopic.trim() } });
+    } catch (err) {
+      console.error("Gemini API Error:", err);
+      alert("Something went wrong while generating the quiz.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
-    <Navbar/>
-    <div className="flex flex-col min-h-screen">
-      <div className="flex-grow">
-        <Quiz />
+      <Navbar />
+      <div className="min-h-screen flex flex-col">
+        <main className="flex-1 flex flex-col">
+          <div className="pt-16 px-4">
+            <div className="text-center mb-8">
+              <h1 className="text-5xl font-bold mb-2 text-black">Quiz Time !!</h1>
+              <p className="text-lg text-gray-600 mt-4">
+                Type a topic, hit play, and let's find out if you're a genius... or just confidently wrong!
+              </p>
+            </div>
+
+            <form onSubmit={handleSearch} className="w-full max-w-xl relative mb-16 mx-auto">
+              <input
+                type="text"
+                value={quizTopic}
+                onChange={(e) => setQuizTopic(e.target.value)}
+                placeholder="Enter topic for your quiz"
+                className="w-full px-6 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 text-lg"
+              />
+              <button 
+                type="submit"
+                disabled={loading}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 hover:text-gray-600 text-red-500"
+              >
+                {loading ? "..." : "→"}
+              </button>
+            </form>
+          </div>
+
+          <div className="flex-1 bg-black">
+            <div className="max-w-screen-xl mx-auto px-4 flex justify-center items-start">
+              <div className="w-full max-w-3xl">
+                <img
+                  src={quizIllustration}
+                  alt="Quiz Illustration"
+                  className="w-full h-auto object-contain"
+                  style={{ maxHeight: '450px' }}
+                />
+              </div>
+            </div>
+          </div>
+        </main>
       </div>
-      <Footer />
-    </div>
     </>
   );
 }
-
-function Header() {
-  return (
-    <header className="bg-gray-200 py-4 px-4 md:px-8 rounded-md mx-4 my-4 flex items-center justify-between">
-      <div className="text-2xl font-bold text-black">WitScribe</div>
-      <nav className="flex items-center space-x-4">
-        <a href="#" className="text-red-500 hover:text-red-700">Home</a>
-        <a href="#" className="text-black hover:text-gray-700">Quiz</a>
-        <a href="#" className="text-black hover:text-gray-700">Community</a>
-        <div className="w-8 h-8 bg-yellow-200 rounded-full flex items-center justify-center ml-2">
-          <span className="text-lg">🧠</span>
-        </div>
-      </nav>
-    </header>
-  );
-}
-
-function Quiz() {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [timer, setTimer] = useState(30);
-  const [isTimerRunning, setIsTimerRunning] = useState(true);
-  const [score, setScore] = useState(0);
-  const [showResults, setShowResults] = useState(false);
-  const [currentSlide, setCurrentSlide] = useState(1);
-
-  const currentQuestion = quizQuestions[currentQuestionIndex];
-
-  useEffect(() => {
-    let interval;
-    if (isTimerRunning && timer > 0) {
-      interval = setInterval(() => {
-        setTimer(prevTime => prevTime - 1);
-      }, 1000);
-    } else if (timer === 0) {
-      handleNextQuestion();
-    }
-    return () => clearInterval(interval);
-  }, [timer, isTimerRunning]);
-
-  const handleOptionSelect = (optionId) => {
-    setSelectedOption(optionId);
-    setIsTimerRunning(false);
-    
-    if (optionId === currentQuestion.correctAnswer) {
-      setScore(score + 1);
-    }
-  };
-
-  const handleNextQuestion = () => {
-    if (currentQuestionIndex < quizQuestions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setSelectedOption(null);
-      setTimer(30);
-      setIsTimerRunning(true);
-      setCurrentSlide(currentSlide + 1);
-    } else {
-      setShowResults(true);
-    }
-  };
-
-  const resetQuiz = () => {
-    setCurrentQuestionIndex(0);
-    setSelectedOption(null);
-    setTimer(30);
-    setIsTimerRunning(true);
-    setScore(0);
-    setShowResults(false);
-    setCurrentSlide(1);
-  };
-
-  return (
-    <div className="max-w-5xl mx-auto mt-30 my-8 p-4 bg-gray-200 rounded-lg">
-      {showResults ? (
-        <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">Quiz Results</h2>
-          <p className="text-xl mb-4">You scored {score} out of {quizQuestions.length}</p>
-          <button 
-            onClick={resetQuiz}
-            className="bg-red-500 text-white px-6 py-2 rounded-md hover:bg-red-600"
-          >
-            Play Again
-          </button>
-        </div>
-      ) : (
-        <>
-          <div className="text-right mb-2">
-            <div className="inline-flex items-center">
-              <Clock size={16} className="mr-1" />
-              <span className="font-mono">{String(Math.floor(timer / 60)).padStart(2, '0')}:{String(timer % 60).padStart(2, '0')}</span>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white p-6 rounded-md flex items-center">
-              <div>
-                <h2 className="text-2xl font-bold mb-4">{currentQuestion.question}</h2>
-                <div className="flex space-x-2 mt-6">
-                  {/* {[1, 2, 3].map((dot, index) => (
-                    <div 
-                      key={index} 
-                      className={h-2 w-2 rounded-full ${index === currentQuestionIndex % 3 ? 'bg-black' : 'bg-gray-300'}}
-                    />
-                  ))} */}
-                </div>
-                <div className="text-right mt-4">
-                  <span className="font-bold text-xl">{currentSlide}</span>
-                </div>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-            {currentQuestion.options.map((option) => {
-  let optionClass = '';
-
-  if (selectedOption === option.id) {
-    if (option.id === currentQuestion.correctAnswer) {
-      optionClass = 'bg-red-500 text-white'; // Correct answer
-    } else {
-      optionClass = 'bg-black-500 text-white'; // Wrong selection
-    }
-  }
-
-  return (
-    <button
-      key={option.id}
-      className={`rounded-md p-6 flex items-center justify-center border-2 ${optionClass} ${
-        selectedOption ? 'cursor-not-allowed' : 'hover:bg-black hover:text-white'
-      }`}
-      onClick={() => !selectedOption && handleOptionSelect(option.id)}
-      disabled={selectedOption !== null}
-    >
-      <span className="text-2xl font-bold">{option.id}</span>
-    </button>
-  );
-})}
-
-            </div>
-          </div>
-          <div className="text-right mt-4">
-            <span className="text-xs text-gray-500">ID: {currentQuestion.id}</span>
-          </div>
-          {selectedOption && (
-            <div className="mt-4 text-center">
-              <button
-                onClick={handleNextQuestion}
-                className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600"
-              >
-                Next Question
-              </button>
-            </div>
-          )}
-        </>
-      )}
-    </div>
-  );
-}
-
-function Footer() {
-  return (
-    <></>
-  );
-}
-
-export default App;

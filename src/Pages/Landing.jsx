@@ -12,7 +12,7 @@ export default function LandingPage() {
     <>
      <div data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-easing="ease-in-out" data-aos-delay="300">
     <div className="min-h-screen bg-gray-100">
-      <div className="space-y-16 bg-gray-100 p-6">
+      <div className="space-y-8 bg-gray-100 p-6">
 
       <nav data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-easing="ease-in-out" data-aos-delay="300" className="flex items-center justify-center gap-8 mt-2">
         <Link className="bg-slate-200 rounded-full px-3 py-1" to='/home'>Home</Link>
@@ -22,7 +22,7 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="text-center bg-gray-300 py-40 mb-8 rounded-xl shadow">
+      <section className="text-center bg-gray-300 py-40 mb-4 rounded-xl shadow">
         <h1 className="text-6xl font-bold mb-4 leading-22">Level Up Your Studies <br /> With WitScribe</h1>
         <p className="text-gray-700 text-xl mb-6">Supercharge Your Studies with Us —<br />Embark on a Transformative Learning Journey Today!</p>
         <Link to = "/register">
@@ -33,7 +33,7 @@ export default function LandingPage() {
 
       {/* Video Summarizer Section */}
       <div data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-easing="ease-in-out" data-aos-delay="400">
-      <section className="flex flex-col md:flex-row items-center bg-gray-200 p-8 rounded-xl shadow">
+      <section className="flex flex-col md:flex-row items-center mx-10 bg-gray-200 p-8 rounded-xl mb-30 shadow">
         <div className="md:w-1/2 mb-6 md:mb-0">
         
           <img src={shraddhadi} alt="How to use WebSocket?" className="rounded-lg shadow" />
@@ -56,7 +56,7 @@ export default function LandingPage() {
 
       {/* Quiz Generation Section */}
       <div data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-easing="ease-in-out" data-aos-delay="400">
-      <section className="py-12 px-4">
+      <section className="py-12 px-4 mb-30">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row gap-8">
             <div className="w-full md:w-1/2">

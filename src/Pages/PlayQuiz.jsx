@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar'; // Adjust import path as needed
+import Navbar from '../Components/Navbar';
 
 export default function QuizPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { quizData, topic } = location.state || {};
+  const { quizData } = location.state || {};
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -32,6 +32,20 @@ export default function QuizPage() {
     }
   }, [showResult, navigate]);
 
+  const handleNext = React.useCallback(() => {
+    setCurrentQuestion((prev) => {
+      if (prev < quizData.length - 1) {
+        setSelectedOption(null);
+        setAnswered(false);
+        setTimer(30);
+        return prev + 1;
+      } else {
+        setShowResult(true);
+        return prev;
+      }
+    });
+  }, [quizData.length]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setTimer(prev => {
@@ -44,7 +58,7 @@ export default function QuizPage() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [currentQuestion, showResult]);
+  }, [currentQuestion, showResult, handleNext]);
 
   if (!quizData) {
     return <div className="text-center p-8">No quiz data found.</div>;
@@ -64,17 +78,6 @@ export default function QuizPage() {
     const correctIndex = current.answer.charCodeAt(0) - 65;
     if (index === correctIndex) {
       setScore(prev => prev + 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentQuestion < quizData.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-      setSelectedOption(null);
-      setAnswered(false);
-      setTimer(30);
-    } else {
-      setShowResult(true);
     }
   };
 
@@ -177,7 +180,7 @@ export default function QuizPage() {
               End Quiz
             </button>
             <div className="text-gray-400 text-sm font-medium">
-              00:{`timer < 10 ? 0${timer} : timer`}
+              00:{timer < 10 ? `0${timer}` : timer}
             </div>
           </div>
         </div>
